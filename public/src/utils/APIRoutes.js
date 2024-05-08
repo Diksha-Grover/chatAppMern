@@ -1,4 +1,4 @@
-export const host = "https://chat-app-mern-server-ten.vercel.app/";
+export const host = "mongodb+srv://chat-app:1234567890@chatappcluster.86kudfl.mongodb.net/?retryWrites=true&w=majority&appName=chatAppCluster";
 export const registerRoute = `${host}/api/auth/register`;
 export const loginRoute = `${host}/api/auth/login`;
 export const setAvatarRoute = `${host}/api/auth/setAvatar`;
