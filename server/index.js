@@ -12,6 +12,13 @@ app.use(express.json());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoute);
+app.get("/", (req, res) => {
+  try {
+    return res.send("working fine");
+  } catch (ex) {
+    console.log(err);
+  }
+});
 
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -33,20 +40,20 @@ const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
     credentials: true,
-  }
+  },
 });
 
 global.onlineUsers = new Map();
 
 io.on("connection", (socket) => {
   global.chatSocket = socket;
-  socket.on("add-user", (userId) =>{
-    onlineUsers.set(userId, socket.id)
-  } );
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
 
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
-    if(sendUserSocket){
+    if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
   });
